@@ -1,0 +1,6 @@
+{
+  "name": "procv-builder",
+  "version": "2.0.0",
+  "description": "Professional CV Builder with AI",
+  "type": "module"
+}
