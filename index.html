@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ProCV Elite - Premium CV Builder</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<!-- Glowing Background Effects -->
+<div class="glow-bg glow-1"></div>
+<div class="glow-bg glow-2"></div>
+
+<nav class="navbar">
+  <div class="nav-container">
+    <a href="#" class="logo">✦ ProCV <span>Elite</span></a>
+    <ul class="nav-links">
+      <li><a href="#templates">Templates</a></li>
+      <li><a href="admin.html" class="admin-link">🔒 Admin</a></li>
+    </ul>
+  </div>
+</nav>
+
+<div class="marquee-container">
+  <div class="marquee-text">
+    🚀 Premium AI-Powered CV Builder • 100% Free • No Signup • 🎯 Admin Approved • 🤖 Groq AI Integrated • 🚀 Premium AI-Powered CV Builder • 100% Free • No Signup • 🎯 Admin Approved • 🤖 Groq AI Integrated
+  </div>
+</div>
+
+<section class="hero">
+  <div class="hero-content">
+    <div class="badge">AI-Powered Builder v2.0</div>
+    <h1>Build a <span class="gradient-text">Standout CV</span> that gets you hired.</h1>
+    <p>Experience the fastest way to create a professional, ATS-friendly resume with our AI assistant. Completely free, forever.</p>
+    <button class="btn-primary pulse-btn" onclick="openBuilder()">Start Building Now <span class="arrow">→</span></button>
+  </div>
+</section>
+
+<section id="templates" class="templates-section">
+  <div class="section-header">
+    <h2>Choose Your Style</h2>
+    <p>Select a premium template to get started</p>
+  </div>
+  <div class="template-grid">
+    <div class="template-card" onclick="selectTemplate('modern', this)">
+      <div class="template-preview"><div class="mock-line title"></div><div class="mock-line"></div><div class="mock-line short"></div></div>
+      <h3>Modern</h3><button class="btn-select">Use Template</button>
+    </div>
+    <div class="template-card" onclick="selectTemplate('classic', this)">
+      <div class="template-preview"><div class="mock-line title" style="background:#94a3b8;"></div><div class="mock-line"></div><div class="mock-line"></div></div>
+      <h3>Classic</h3><button class="btn-select">Use Template</button>
+    </div>
+    <div class="template-card" onclick="selectTemplate('creative', this)">
+      <div class="template-preview creative-preview"><div class="mock-sidebar"></div><div class="mock-main"><div class="mock-line title"></div><div class="mock-line"></div></div></div>
+      <h3>Creative</h3><button class="btn-select">Use Template</button>
+    </div>
+    <div class="template-card" onclick="selectTemplate('minimal', this)">
+      <div class="template-preview"><div class="mock-line title" style="width:30%;"></div><div class="mock-line short"></div></div>
+      <h3>Minimal</h3><button class="btn-select">Use Template</button>
+    </div>
+  </div>
+</section>
+
+<!-- Builder Modal -->
+<div id="builderModal" class="builder-modal">
+  <div class="builder-header">
+    <button class="btn-back" onclick="closeBuilder()">← Back</button>
+    <h2>CV Editor</h2>
+    <button class="btn-save" onclick="requestDownload()">📥 Request Download</button>
+  </div>
+  <div class="builder-body">
+    <div class="form-panel">
+      <div class="form-tabs">
+        <button class="tab active" onclick="switchTab(event, 'personal')">Personal</button>
+        <button class="tab" onclick="switchTab(event, 'experience')">Experience</button>
+        <button class="tab" onclick="switchTab(event, 'education')">Education</button>
+        <button class="tab" onclick="switchTab(event, 'skills')">Skills</button>
+        <button class="tab ai-tab" onclick="switchTab(event, 'ai')">✨ AI Magic</button>
+      </div>
+
+      <div id="tab-personal" class="tab-content active">
+        <label>Full Name</label><input type="text" id="fullName" oninput="updatePreview()">
+        <label>Job Title</label><input type="text" id="jobTitle" oninput="updatePreview()">
+        <label>Email</label><input type="email" id="email" oninput="updatePreview()">
+        <label>Phone</label><input type="text" id="phone" oninput="updatePreview()">
+        <label>Profile Photo</label><input type="file" id="photoInput" accept="image/*" onchange="handlePhoto(event)">
+        <label>Summary</label><textarea id="summary" rows="4" oninput="updatePreview()"></textarea>
+      </div>
+
+      <div id="tab-experience" class="tab-content">
+        <label>Job Title</label><input type="text" id="expTitle" oninput="updatePreview()">
+        <label>Company</label><input type="text" id="expCompany" oninput="updatePreview()">
+        <label>Duration</label><input type="text" id="expDuration" oninput="updatePreview()">
+        <label>Description</label><textarea id="expDesc" rows="4" oninput="updatePreview()"></textarea>
+      </div>
+
+      <div id="tab-education" class="tab-content">
+        <label>Degree</label><input type="text" id="eduDegree" oninput="updatePreview()">
+        <label>Institution</label><input type="text" id="eduSchool" oninput="updatePreview()">
+        <label>Year</label><input type="text" id="eduYear" oninput="updatePreview()">
+      </div>
+
+      <div id="tab-skills" class="tab-content">
+        <label>Skills (comma separated)</label><input type="text" id="skills" oninput="updatePreview()">
+        <label>Languages</label><input type="text" id="languages" oninput="updatePreview()">
+      </div>
+
+      <div id="tab-ai" class="tab-content">
+        <div class="ai-header">
+          <h3>✨ AI Writing Assistant</h3>
+          <p>Struggling to write? Let AI do it for you.</p>
+        </div>
+        <textarea id="aiQuery" rows="3" placeholder="e.g., Write a professional summary for a software engineer with 5 years of experience..."></textarea>
+        <button class="btn-primary" onclick="askAI()" id="aiBtn">Generate with AI ✨</button>
+        <div id="aiResponse" class="ai-response"></div>
+        <button class="btn-secondary" onclick="applyAIToSummary()">Apply to Summary</button>
+      </div>
+    </div>
+
+    <div class="preview-panel">
+      <div class="cv-preview-wrapper">
+        <div id="cvPreview" class="cv-preview modern"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Download Modals -->
+<div id="downloadModal" class="modal">
+  <div class="modal-box glass-box">
+    <h3>📥 Request Approval</h3>
+    <p>Admin approval is required to download. Enter details:</p>
+    <input type="text" id="reqName" placeholder="Your Name">
+    <input type="text" id="reqContact" placeholder="Phone / Email / FB Link">
+    <button class="btn-primary" onclick="submitDownloadRequest()">Send Request</button>
+    <button class="btn-cancel" onclick="closeDownloadModal()">Cancel</button>
+  </div>
+</div>
+
+<div id="successModal" class="modal">
+  <div class="modal-box glass-box">
+    <h3>✅ Request Sent!</h3>
+    <p>Admin will review shortly. Message on Facebook for instant approval:</p>
+    <a href="https://www.facebook.com/Shihab20811" target="_blank" class="btn-facebook">📘 Message Admin</a>
+  </div>
+</div>
+
+<script src="js/main.js"></script>
+</body>
+  </html>
